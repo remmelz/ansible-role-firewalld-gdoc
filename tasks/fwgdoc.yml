@@ -1,0 +1,19 @@
+
+---
+
+  - name: Creating directories
+    file:
+      path: {item}
+      mode: 0775
+      state: directory
+    with_items:
+      - /opt/fwgdoc/bin
+      - /opt/fwgdoc/etc
+
+  - name: Copy fwgdoc script
+    copy:
+      src: ./files/fwgdoc
+      dest: "/opt/fwgdoc/bin/fwgdoc"
+      owner: root
+      group: root
+      mode: 0755

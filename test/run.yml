@@ -1,0 +1,8 @@
+
+---
+
+  - name: Configuring Firewalld Googledocs
+    hosts: all
+
+  roles:
+    - ansible-role-firewalld-googledoc
