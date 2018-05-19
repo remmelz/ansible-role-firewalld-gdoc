@@ -1,5 +1,5 @@
 
 ---
 
-  gdoc_url = "<google-spreadsheet-csv-url>"
+  gdoc_url: "<google-spreadsheet-csv-url>"
 
