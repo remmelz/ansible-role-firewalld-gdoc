@@ -1,2 +1,2 @@
-# ansible-role-firewalld-gdoc
+# ansible-role-firewalld-googledoc
 Handle firewalld whitelist ipsets using a google spreadsheet.
