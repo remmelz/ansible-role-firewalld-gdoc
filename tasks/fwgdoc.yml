@@ -22,4 +22,6 @@
     lineinfile:
       path: /opt/fwd-gdoc/etc/whitelist.gdoc
       line: "{{ gdoc_url }}"
+      create: yes
+      
 
