@@ -19,7 +19,7 @@
       mode: 0755
 
   - name: Configuring Google spreadsheet url
-    - lineinfile:
+    lineinfile:
       path: /opt/fwd-gdoc/etc/whitelist.gdoc
       line: "{{ gdoc_url }}"
 
