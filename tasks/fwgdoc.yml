@@ -10,7 +10,7 @@
       - /opt/fwd-gdoc/bin
       - /opt/fwd-gdoc/etc
 
-  - name: Copy fwgdoc script
+  - name: Copy fwd-gdoc script
     copy:
       src: ./files/fwd-gdoc.sh
       dest: "/opt/fwd-gdoc/bin/fwgdoc"
