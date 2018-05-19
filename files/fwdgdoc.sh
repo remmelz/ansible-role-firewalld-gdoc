@@ -25,8 +25,11 @@ if [[ -z `head -1 ${tmpfile}.1 | grep -i ${ipset}` ]]; then
 fi
 
 if [[ ! -f ${xmlfile} ]]; then
-  ${fwcmd} --permanent --new-ipset=whitelist --type=hash:ip
-  ${fwcmd} --add-rich-rule='rule source ipset=whitelist service name=ssh accept'
+  cmd="${fwcmd} --permanent --new-ipset=whitelist --type=hash:ip"
+  echo ${cmd}" "; ${cmd}
+  cmd="${fwcmd} --permanent --add-rich-rule='rule source ipset=whitelist service name=ssh accept'"
+  echo ${cmd}" "; ${cmd}
+  fwreload=1
 fi
 
 cat ${tmpfile}.1 \
