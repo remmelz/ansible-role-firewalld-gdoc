@@ -12,7 +12,7 @@
 
   - name: Copy fwgdoc script
     copy:
-      src: ./files/fwgdoc
+      src: ./files/fwgdoc.sh
       dest: "/opt/fwgdoc/bin/fwgdoc"
       owner: root
       group: root
