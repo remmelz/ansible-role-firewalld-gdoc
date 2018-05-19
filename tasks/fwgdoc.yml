@@ -7,20 +7,20 @@
       mode: 0775
       state: directory
     with_items:
-      - /opt/fwd-gdoc/bin
-      - /opt/fwd-gdoc/etc
+      - /opt/fwdgdoc/bin
+      - /opt/fwdgdoc/etc
 
   - name: Copy fwd-gdoc script
     copy:
-      src: ./files/fwd-gdoc.sh
-      dest: "/opt/fwd-gdoc/bin/fwgdoc"
+      src: ./files/fwdgdoc.sh
+      dest: "/opt/fwdgdoc/bin/fwgdoc"
       owner: root
       group: root
       mode: 0755
 
   - name: Configuring Google spreadsheet url
     lineinfile:
-      path: /opt/fwd-gdoc/etc/whitelist.gdoc
+      path: /opt/fwdgdoc/etc/whitelist.gdoc
       line: "{{ gdoc_url }}"
       create: yes
       
