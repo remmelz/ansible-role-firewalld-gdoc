@@ -3,7 +3,7 @@
 
   - name: Creating directories
     file:
-      path: {item}
+      path: "{{ item }}"
       mode: 0775
       state: directory
     with_items:
