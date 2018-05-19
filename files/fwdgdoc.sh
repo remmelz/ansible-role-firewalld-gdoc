@@ -29,6 +29,8 @@ if [[ ! -f ${xmlfile} ]]; then
   echo ${cmd}" "; ${cmd}
   cmd="${fwcmd} --permanent --add-rich-rule='rule source ipset=whitelist service name=ssh accept'"
   echo ${cmd}" "; ${cmd}
+  cmd="${fwcmd} --permanent --remove-service ssh"
+  echo ${cmd}" "; ${cmd}
   fwreload=1
 fi
 
