@@ -4,8 +4,8 @@ Handle firewalld whitelist ipsets using a google spreadsheet.
 ## Setup
 * Create a Google Spreadsheet with the following layout:
 ```
-| Whitelist | Description
-| <ip addr> | <some text>
+| Whitelist | Description |
+| <ip addr> | <some text> |
 ```
 * In the Spreadsheet, go to File -> Download as -> Comma-separated values.
 * Copy the url location.
