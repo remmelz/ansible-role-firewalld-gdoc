@@ -2,7 +2,7 @@
 
 ipset="whitelist"
 fwcmd="/usr/bin/firewall-cmd"
-gdocurl="/etc/firewalld/whitelist.gdoc"
+gdocurl="/opt/fwdgdoc/etc/whitelist.gdoc"
 tmpfile="/var/tmp/fw.whitelist.tmp"
 xmlfile="/etc/firewalld/ipsets/${ipset}.xml"
 fwreload=0
