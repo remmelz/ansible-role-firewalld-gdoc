@@ -13,7 +13,7 @@
   - name: Copy fwd-gdoc script
     copy:
       src: ./files/fwdgdoc.sh
-      dest: "/opt/fwdgdoc/bin/fwgdoc"
+      dest: "/opt/fwdgdoc/bin/fwdgdoc"
       owner: root
       group: root
       mode: 0755
@@ -23,5 +23,7 @@
       path: /opt/fwdgdoc/etc/whitelist.gdoc
       line: "{{ gdoc_url }}"
       create: yes
-      
-
+     
+  - name: Configuring crontab
+    cron:
+      job: "/opt/fwdgdoc/bin/fwdgdoc > /dev/null"
