@@ -7,13 +7,13 @@
       mode: 0775
       state: directory
     with_items:
-      - /opt/fwgdoc/bin
-      - /opt/fwgdoc/etc
+      - /opt/fwd-gdoc/bin
+      - /opt/fwd-gdoc/etc
 
   - name: Copy fwgdoc script
     copy:
-      src: ./files/fwgdoc.sh
-      dest: "/opt/fwgdoc/bin/fwgdoc"
+      src: ./files/fwd-gdoc.sh
+      dest: "/opt/fwd-gdoc/bin/fwgdoc"
       owner: root
       group: root
       mode: 0755
