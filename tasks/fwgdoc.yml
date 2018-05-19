@@ -17,3 +17,9 @@
       owner: root
       group: root
       mode: 0755
+
+  - name: Configuring Google spreadsheet url
+    - lineinfile:
+      path: /opt/fwd-gdoc/etc/whitelist.gdoc
+      line: "{{ gdoc_url }}"
+
