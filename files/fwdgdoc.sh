@@ -25,12 +25,15 @@ if [[ -z `head -1 ${tmpfile}.1 | grep -i ${ipset}` ]]; then
 fi
 
 if [[ ! -f ${xmlfile} ]]; then
-  cmd="${fwcmd} --permanent --new-ipset=whitelist --type=hash:ip"
-  echo ${cmd}" "; ${cmd}
-  cmd="${fwcmd} --permanent --add-rich-rule='rule source ipset=whitelist service name=ssh accept'"
-  echo ${cmd}" "; ${cmd}
-  cmd="${fwcmd} --permanent --remove-service ssh"
-  echo ${cmd}" "; ${cmd}
+  echo "${fwcmd} --permanent --new-ipset=whitelist --type=hash:ip"
+  ${fwcmd} --permanent --new-ipset=whitelist --type=hash:ip
+  
+  echo "${fwcmd} --permanent --add-rich-rule='rule source ipset=whitelist service name=ssh accept'"
+  ${fwcmd} --permanent --add-rich-rule='rule source ipset=whitelist service name=ssh accept'
+  
+  echo "${fwcmd} --permanent --remove-service ssh"
+  ${fwcmd} --permanent --remove-service ssh
+  
   fwreload=1
 fi
 
@@ -50,23 +53,28 @@ for ipaddr in `diff ${tmpfile}.2 ${tmpfile}.3 \
 
   if [[ -n `echo ${ipaddr} | cut -c1 | grep '<'` ]]; then
     ipaddr=`echo ${ipaddr} | cut -c3-`
-    cmd="${fwcmd} --permanent --ipset=${ipset} --add-entry=${ipaddr}"
-    echo ${cmd}" "; ${cmd}
+    
+    echo "${fwcmd} --permanent --ipset=${ipset} --add-entry=${ipaddr}"
+    ${fwcmd} --permanent --ipset=${ipset} --add-entry=${ipaddr}
+    
     fwreload=1
   fi
 
   if [[ -n `echo ${ipaddr} | cut -c1 | grep '>'` ]]; then
     ipaddr=`echo ${ipaddr} | cut -c3-`
-    cmd="${fwcmd} --permanent --ipset=${ipset} --remove-entry=${ipaddr}"
-    echo ${cmd}" "; ${cmd}
+    
+    echo "${fwcmd} --permanent --ipset=${ipset} --remove-entry=${ipaddr}"
+    ${fwcmd} --permanent --ipset=${ipset} --remove-entry=${ipaddr}
+    
     fwreload=1
   fi
 
 done
 
 if [[ ${fwreload} -gt 0 ]]; then
-  cmd="${fwcmd} --reload"
-  echo ${cmd}" "; ${cmd}
+
+  echo "${fwcmd} --reload"
+  ${fwcmd} --reload
 fi
 
 rm -f ${tmpfile}.*
