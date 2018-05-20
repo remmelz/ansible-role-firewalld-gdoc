@@ -1,6 +1,14 @@
 
 ---
 
+  - name: Installing requirements
+    package:
+      name: firewalld
+      state: present
+  
+  - name: Starting Firewalld service
+    systemd: name=firewalld enabled=yes state=started
+  
   - name: Creating directories
     file:
       path: "{{ item }}"
