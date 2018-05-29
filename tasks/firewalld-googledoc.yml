@@ -20,8 +20,8 @@
 
   - name: Copy firewalld-googledoc script
     copy:
-      src: ./files/firewalld-googledoc.sh
-      dest: "/opt/firewalld-googledoc/bin/firewalld-googledoc"
+      src: ./files/sync.sh
+      dest: "/opt/firewalld-googledoc/bin/sync.sh"
       owner: root
       group: root
       mode: 0755
@@ -41,4 +41,4 @@
   - name: Configuring crontab
     cron:
       name: Firewalld Google spreadsheet whitelist
-      job: "/opt/firewalld-googledoc/bin/firewalld-googledoc > /dev/null"
+      job: "/opt/firewalld-googledoc/bin/sync.sh > /dev/null"
