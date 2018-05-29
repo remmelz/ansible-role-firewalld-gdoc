@@ -26,12 +26,18 @@
       group: root
       mode: 0755
 
+  - name: Check that the whitelist.url exists
+    stat:
+      path: /opt/firewalld-googledoc/etc/whitelist.url
+    register: whitelist
+
   - name: Configuring Google spreadsheet url
     lineinfile:
       path: /opt/firewalld-googledoc/etc/whitelist.url
       line: "{{ gdoc_url }}"
       create: yes
-     
+    when: whitelist.stat.exists == False
+
   - name: Configuring crontab
     cron:
       name: Firewalld Google spreadsheet whitelist
