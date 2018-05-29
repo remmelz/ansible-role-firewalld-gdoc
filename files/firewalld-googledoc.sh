@@ -75,6 +75,9 @@ if [[ ${fwreload} -gt 0 ]]; then
 
   echo "${fwcmd} --reload"
   ${fwcmd} --reload
+else
+  
+  echo "nothing to do."
 fi
 
 rm -f ${tmpfile}.*
