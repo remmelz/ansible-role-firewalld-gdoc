@@ -15,24 +15,24 @@
       mode: 0775
       state: directory
     with_items:
-      - /opt/fwdgdoc/bin
-      - /opt/fwdgdoc/etc
+      - /opt/firewalld-googledoc/bin
+      - /opt/firewalld-googledoc/etc
 
-  - name: Copy fwdgdoc script
+  - name: Copy firewalld-googledoc script
     copy:
-      src: ./files/fwdgdoc.sh
-      dest: "/opt/fwdgdoc/bin/fwdgdoc"
+      src: ./files/firewalld-googledoc.sh
+      dest: "/opt/firewalld-googledoc/bin/firewalld-googledoc"
       owner: root
       group: root
       mode: 0755
 
   - name: Configuring Google spreadsheet url
     lineinfile:
-      path: /opt/fwdgdoc/etc/whitelist.gdoc
+      path: /opt/firewalld-googledoc/etc/whitelist.url
       line: "{{ gdoc_url }}"
       create: yes
      
   - name: Configuring crontab
     cron:
       name: Firewalld Google spreadsheet whitelist
-      job: "/opt/fwdgdoc/bin/fwdgdoc > /dev/null"
+      job: "/opt/firewalld-googledoc/bin/firewalld-googledoc > /dev/null"
