@@ -1,0 +1,142 @@
+#!/usr/bin/python
+
+import os, sys
+import urllib2
+
+######################################
+# FirewallD Gsync
+######################################
+
+class fwdgsync:
+
+    def __init__(self):
+
+        self.cmd_fwadd = "/usr/bin/firewall-cmd --permanent --add-rich-rule"
+        self.cmd_fwrm  = "/usr/bin/firewall-cmd --permanent --remove-rich-rule"
+        self.cmd_fwls  = "/usr/bin/firewall-cmd --list-rich-rules"
+        self.cmd_fwrl  = "/usr/bin/firewall-cmd --reload"
+        self.cmd_fwrr  = "rule family=ipv4 source address={{source}} service name={{service}} accept"
+        self.cmd_ip    = "/sbin/ip a"
+
+        self.fwreload = False
+        self.getHostMAC()
+        self.getRichrules()
+
+    def getRichrules(self):
+
+        self.fw_cur = []
+        for line in os.popen(self.cmd_fwls).readlines():
+            line = line.split(' ')
+            source = line[3].split('"')[1]
+            service = line[5].split('"')[1]
+            self.fw_cur.append({'source': source, 'service': service})
+
+
+    def existCSV(self, richrule):
+
+        source  = richrule['source']
+        service = richrule['service']
+
+        for rule in self.parseCSV():
+            if source == rule['source']:
+                if service == rule['service']:
+                    return True
+
+    def existsFW(self, richrule):
+
+        source  = richrule['source']
+        service = richrule['service']
+
+        for rule in self.fw_cur:
+            if source == rule['source']:
+                if service == rule['service']:
+                    return True
+
+    def reloadFW(self):
+        if self.fwreload:
+            print self.cmd_fwrl
+            os.system(self.cmd_fwrl)
+
+    def removeFWrules(self):
+
+        if self.fw_cur == self.parseCSV():
+            return
+
+        for richrule in self.fw_cur:
+            if self.existsCSV(richrule):
+                continue
+
+            rr = self.cmd_fwrr.replace("{{source}}", richrule['source'])
+            rr = rr.replace("{{service}}", richrule['service'])
+            print self.cmd_fwrm, '"', rr, '"'
+            os.system(self.cmd_fwrm + ' "' + rr + '"')
+            self.fwreload = True
+
+    def addFWrules(self):
+
+        if self.fw_cur == self.parseCSV():
+            return
+            
+        for richrule in self.parseCSV():
+            if self.existsFW(richrule):
+                continue
+
+            source  = richrule['source']
+            service = richrule['service']
+
+            rr = self.cmd_fwrr.replace("{{source}}", source)
+            rr = rr.replace("{{service}}", service)
+            self.fw_cur.append({'source':source, 'service': service})
+            print self.cmd_fwadd, '"', rr, '"'
+            os.system(self.cmd_fwadd + ' "' + rr + '"')
+            self.fwreload = True
+
+    def getCSV(self):
+
+        csv = urllib2.urlopen(self.url).read()
+        self.csv = csv.split("\r\n")
+
+    def parseCSV(self):
+
+        allow = []
+        for line in self.csv:
+            line = line.split(',')
+            mac = line[1]
+            if mac in self.maclist:
+                source  = line[2]
+                service = line[3]
+                allow.append({'source': source, 'service': service})
+        return allow
+
+    def getHostMAC(self):
+
+        maclist = []
+        cmd = os.popen(self.cmd_ip).readlines()
+        for line in cmd:
+            if 'ether ' in line:
+                mac = line.strip()
+                mac = mac.split(' ')[1]
+                maclist.append(mac)
+        self.maclist = maclist
+
+    def loadURL(self, urlfile):
+        self.url = open(urlfile).read()
+        
+
+######################################
+# Start
+######################################
+
+f = fwdgsync()
+
+if os.path.isfile(sys.argv[-1]):
+    f.loadURL(sys.argv[-1])
+else:
+    print "Error: no url file found"
+    sys.exit(1)
+
+f.getCSV()
+f.addFWrules()
+f.removeFWrules()
+f.reloadFW()
+
