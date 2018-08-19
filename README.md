@@ -1,4 +1,4 @@
-# ansible-role-firewalld-googledoc
+# ansible-role-firewalld-gsync
 Handle firewalld whitelist ipsets using a google spreadsheet.
 
 ## Setup
@@ -9,5 +9,5 @@ Handle firewalld whitelist ipsets using a google spreadsheet.
 ```
 * In the Spreadsheet, go to File -> Download as -> Comma-separated values.
 * Copy the url location.
-* Edit file /opt/fwdgdoc/etc/whitelist.gdoc
+* Edit file /opt/firewalld-gsync/etc/whitelist.url
 * Paste the url and save the file.
