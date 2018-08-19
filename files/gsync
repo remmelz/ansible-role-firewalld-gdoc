@@ -59,6 +59,8 @@ class fwdgsync:
         if self.fwreload:
             print self.cmd_fwrl
             os.system(self.cmd_fwrl)
+            return
+        print "Synced"
 
     def removeFWrules(self):
 
