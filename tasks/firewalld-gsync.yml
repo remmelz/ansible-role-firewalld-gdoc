@@ -15,25 +15,25 @@
       mode: 0775
       state: directory
     with_items:
-      - /opt/firewalld-googledoc/bin
-      - /opt/firewalld-googledoc/etc
+      - /opt/firewalld-gsync/bin
+      - /opt/firewalld-gsync/etc
 
-  - name: Copy firewalld-googledoc script
+  - name: Copy firewalld-gsync script
     copy:
-      src: ./files/sync.sh
-      dest: "/opt/firewalld-googledoc/bin/sync.sh"
+      src: ./files/firewalld-gsync
+      dest: "/opt/firewalld-gsync/bin/gsync"
       owner: root
       group: root
       mode: 0755
 
   - name: Check that the whitelist.url exists
     stat:
-      path: /opt/firewalld-googledoc/etc/whitelist.url
+      path: /opt/firewalld-gsync/etc/whitelist.url
     register: whitelist
 
   - name: Configuring Google spreadsheet url
     lineinfile:
-      path: /opt/firewalld-googledoc/etc/whitelist.url
+      path: /opt/firewalld-gsync/etc/whitelist.url
       line: "{{ gdoc_url }}"
       create: yes
     when: whitelist.stat.exists == False
@@ -41,4 +41,4 @@
   - name: Configuring crontab
     cron:
       name: Firewalld Google spreadsheet whitelist
-      job: "/opt/firewalld-googledoc/bin/sync.sh > /dev/null"
+      job: "/opt/firewalld-gsync/bin/gsync > /dev/null"
