@@ -35,7 +35,7 @@ class fwdgsync:
             self.fw_cur.append({'source': source, 'service': service})
 
 
-    def existCSV(self, richrule):
+    def existsCSV(self, richrule):
 
         source  = richrule['source']
         service = richrule['service']
