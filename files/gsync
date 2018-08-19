@@ -7,6 +7,9 @@ import urllib2
 # FirewallD Gsync
 ######################################
 
+# Default url file
+urlfile = "/opt/firewalld-gsync/etc/whitelist.url"
+
 class fwdgsync:
 
     def __init__(self):
@@ -127,16 +130,17 @@ class fwdgsync:
 # Start
 ######################################
 
-f = fwdgsync()
+if len(sys.argv) > 1:
+    if os.path.isfile(sys.argv[-1]):
+        urlfile = sys.argv[-1]
 
-if os.path.isfile(sys.argv[-1]):
-    f.loadURL(sys.argv[-1])
-else:
-    print "Error: no url file found"
+if not os.path.isfile(urlfile):
+    print "Error: no urlfile found"
     sys.exit(1)
 
+f = fwdgsync()
+f.loadURL(urlfile)
 f.getCSV()
 f.addFWrules()
 f.removeFWrules()
 f.reloadFW()
-
