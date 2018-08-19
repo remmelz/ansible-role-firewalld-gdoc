@@ -20,7 +20,7 @@
 
   - name: Copy firewalld-gsync script
     copy:
-      src: ./files/firewalld-gsync
+      src: ./files/gsync
       dest: "/opt/firewalld-gsync/bin/gsync"
       owner: root
       group: root
