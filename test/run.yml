@@ -5,4 +5,4 @@
     hosts: all
 
   roles:
-    - ansible-role-firewalld-googledoc
+    - ansible-role-firewalld-gsync
