@@ -1,5 +1,5 @@
 # ansible-role-firewalld-gsync
-Handle firewalld whitelist ipsets using a google spreadsheet. It reads the url file which contains the CSV formatted url. It than matches the hosts MAC address and execute the firewall-cmd.
+Handle firewalld whitelist ipsets using a google spreadsheet. The scripts checks each minute for changes in the CSV formatted url file. It than matches the hosts MAC address and execute the firewall-cmd for creating firewallD rich rules.
 
 ## Setup
 * Create a Google Spreadsheet with the following layout:
