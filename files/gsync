@@ -58,6 +58,7 @@ class fwdgsync:
         return False
                 
     def reloadFW(self):
+        
         if self.fwreload:
             print self.cmd_fwrl
             os.system(self.cmd_fwrl)
@@ -127,6 +128,7 @@ class fwdgsync:
         self.maclist = maclist
 
     def loadURL(self, urlfile):
+        
         self.url = open(urlfile).read()
         
 
