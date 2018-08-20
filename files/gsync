@@ -44,6 +44,7 @@ class fwdgsync:
             if source == rule['source']:
                 if service == rule['service']:
                     return True
+        return False
 
     def existsFW(self, richrule):
 
@@ -54,7 +55,8 @@ class fwdgsync:
             if source == rule['source']:
                 if service == rule['service']:
                     return True
-
+        return False
+                
     def reloadFW(self):
         if self.fwreload:
             print self.cmd_fwrl
